@@ -1,0 +1,7 @@
+<h1 class="mb-4">Add a movie to <%= @list.name %></h1>
+
+<%= simple_form_for [@list, @bookmark] do |f| %>
+  <%= f.association :movie, collection: Movie.all, prompt: "Select a movie" %>
+  <%= f.input :comment %>
+  <%= f.submit "Add bookmark", class: "btn btn-primary" %>
+<% end %>

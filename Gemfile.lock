@@ -240,6 +240,9 @@ GEM
       rspec-support (~> 3.13)
     rspec-support (3.13.6)
     securerandom (0.4.1)
+    simple_form (5.4.0)
+      actionpack (>= 7.0)
+      activemodel (>= 7.0)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger
@@ -292,6 +295,7 @@ DEPENDENCIES
   rails (~> 7.1.6)
   rails-controller-testing
   rspec-rails
+  simple_form
   sprockets-rails
   stimulus-rails
   turbo-rails

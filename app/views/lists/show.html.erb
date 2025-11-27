@@ -1,0 +1,25 @@
+<h1><%= @list.name %></h1>
+
+<div class="mb-3">
+  <%= link_to "Add a movie", new_list_bookmark_path(@list), class: "btn btn-primary" %>
+</div>
+
+<% if @bookmarks.any? %>
+  <ul class="list-group">
+    <% @bookmarks.each do |bookmark| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <strong><%= bookmark.movie.title %></strong><br>
+          <small><%= bookmark.comment %></small>
+        </div>
+        <%= link_to "Delete",
+                    bookmark_path(bookmark),
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                    class: "btn btn-sm btn-outline-danger" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No movies in this list yet.</p>
+  <%= link_to "Add a movie", new_list_bookmark_path(@list), class: "btn btn-primary" %>
+<% end %>
