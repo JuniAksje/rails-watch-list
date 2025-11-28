@@ -2,5 +2,6 @@
 
 <%= simple_form_for @list do |f| %>
   <%= f.input :name %>
+  <%= f.input :image_url, label: "Image URL (optional)" %>
   <%= f.submit "Create list", class: "btn btn-primary" %>
 <% end %>

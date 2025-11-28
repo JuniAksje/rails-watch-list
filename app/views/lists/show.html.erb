@@ -1,25 +1,46 @@
-<h1><%= @list.name %></h1>
+<hr class="my-5">
 
-<div class="mb-3">
-  <%= link_to "Add a movie", new_list_bookmark_path(@list), class: "btn btn-primary" %>
-</div>
+<div class="row">
+  <!-- Coluna esquerda: lista de reviews -->
+  <div class="col-md-6">
+    <h2 class="mb-4">Reviews</h2>
 
-<% if @bookmarks.any? %>
-  <ul class="list-group">
-    <% @bookmarks.each do |bookmark| %>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <div>
-          <strong><%= bookmark.movie.title %></strong><br>
-          <small><%= bookmark.comment %></small>
+    <% if @reviews.any? %>
+      <% @reviews.each do |review| %>
+        <div class="mb-3">
+          <!-- estrelinhas simples: repete "★" rating vezes -->
+          <div class="text-warning mb-1">
+            <%= "★" * review.rating %><%= "☆" * (5 - review.rating) %>
+          </div>
+          <p class="mb-1"><%= review.content %></p>
+          <small class="text-muted">less than a minute ago</small>
+
+          <div>
+            <%= link_to "delete",
+                        review_path(review),
+                        data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                        class: "text-danger small" %>
+          </div>
+
+          <hr>
         </div>
-        <%= link_to "Delete",
-                    bookmark_path(bookmark),
-                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-                    class: "btn btn-sm btn-outline-danger" %>
-      </li>
+      <% end %>
+    <% else %>
+      <p>No reviews yet.</p>
     <% end %>
-  </ul>
-<% else %>
-  <p>No movies in this list yet.</p>
-  <%= link_to "Add a movie", new_list_bookmark_path(@list), class: "btn btn-primary" %>
-<% end %>
+  </div>
+
+  <!-- Coluna direita: formulário -->
+  <div class="col-md-6">
+    <h2 class="mb-4">Add your review</h2>
+
+    <%= simple_form_for [@list, @review] do |f| %>
+      <%= f.input :content, label: "Comment *", placeholder: "Add your review here..." %>
+      <%= f.input :rating,
+                  label: "Rating *",
+                  collection: 0..5,
+                  as: :radio_buttons %>
+      <%= f.submit "Create Review", class: "btn btn-success mt-2" %>
+    <% end %>
+  </div>
+</div>
